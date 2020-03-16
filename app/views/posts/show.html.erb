@@ -1,0 +1,255 @@
+<div class="ShowPostBox">
+	<div class="userimageAndNameBox">
+		<% @users.each do |user| %>
+			<% if user.image? %>
+				<% if @post.user_id == user.id %>
+					<div class="imageBox">
+						<object>
+							<%= link_to user_path(user) , data: {"turbolinks" => false} do %>
+								<%= image_tag user.image.to_s,class: "user_image" %>
+							<% end %>
+						</object>
+					</div>
+				<% end %>
+			<% end %>
+			<% unless user.image? %>
+				<% if @post.user_id == user.id %>
+					<div class="imageBox">
+						<object>
+							<%= link_to user_path(user)  , data: {"turbolinks" => false} do %>
+								<%= image_tag "人物アイコン.png",class: "user_image" %>
+							<% end %>
+						</object>
+					</div>
+				<% end %>
+			<% end %>
+			<% if @post.user_id == user.id %>
+				<object>
+					<h4 class="user_nameText">
+						<%= link_to user.name ,user_path(user)  , data: {"turbolinks" => false},class: "link_toUser_name"%>
+					</h4>
+				</object>
+			<% end %>
+		<% end %>
+	</div>
+		<% if user_signed_in? %>
+			<% if @post.user_id == current_user.id %>
+				<object>
+					<br>
+					<%= link_to "DELETE", post_path(@post), method: :delete , data: {"turbolinks" => false},class: "deletePost"%>
+				</object>
+			<% end %>
+		<% end %>
+		<div class="postAtagBox">
+			<%= simple_format @post.body ,class: "post_body showBody" %><br>
+				<div class="postideoAndImage">
+					<% if @post.video? %>
+						<%= video_tag @post.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
+					<% end %>
+					<% if @post.image? %>
+						<%= image_tag @post.image.url,class: "imagePost", id: "image" %>
+					<% end %>
+				</div>
+			<%= render 'tag_list' , tag_list: @post.tag_list%>
+		</div>
+	<br>
+	<%= @likePosts.count.to_s %> いいね
+	<% if user_signed_in? %>
+		<div class="actionMenuBox">
+			<div class="likeBox">
+				<% if current_user.already_liked?(@post) %>
+					<%= link_to post_like_path(@post), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
+						<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30" %>
+					<% end %>
+				<% else %>
+					<%= link_to post_likes_path(@post), method: :post, data: {"turbolinks" => false}, class: "likeLink" do %>
+							<%= image_tag "ハートのマーク2.png", width: "30", height: "30" %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="messageBox">
+				<div class="content">
+					<a class="js-modal-open" href="">
+						<%= image_tag "message (1).png", width: "30", height: "30" %>
+					</a>
+				</div>
+			</div>
+			<div class="retweetBox">
+				<%= link_to root_path do %>
+					<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="CommentformBox">
+
+	</div> -->
+
+	<div class="modal js-modal">
+		<div class="modal__bg js-modal-close"></div>
+		<div class="modal__content">
+			<%= link_to "",class: "js-modal-close batsu" ,  data: {"turbolinks" => false} do %>
+				<%= image_tag "batu (1).png", width: "30", height: "30" %>
+			<% end %>
+			<div class="userimageAndNameBox">
+				<% @users.each do |user| %>
+					<% if user.image? %>
+						<% if @post.user_id == user.id %>
+							<div class="imageBox">
+								<object>
+									<%= image_tag user.image.to_s,class: "user_image" %>
+								</object>
+							</div>
+						<% end %>
+					<% end %>
+					<% unless user.image? %>
+						<% if @post.user_id == user.id %>
+							<div class="imageBox">
+								<object>
+									<%= image_tag "人物アイコン.png",class: "user_image" %>
+								</object>
+							</div>
+						<% end %>
+					<% end %>
+					<% if @post.user_id == user.id %>
+						<object>
+							<h4 class="user_nameText">
+								<%= user.name %>
+							</h4>
+						</object>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="postAtagBox dmBox">
+				<%= simple_format @post.body.truncate(50), class: "post_body dmBoxpost_body" %>
+				<% @users.each do |user| %>
+					<% if user.image? %>
+						<% if current_user.id == user.id %>
+								<%= image_tag current_user.image.to_s,class: "user_image" %>
+						<% end %>
+					<% else %>
+						<% if current_user.id == user.id %>
+								<%= image_tag "人物アイコン.png",class: "user_image" %>
+						<% end %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="commentformBox">
+				<%= form_with model: @comment, local: true do |f|%>
+					<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
+					<%= f.hidden_field :post_id, :value => @post.id %><br>
+					<%= f.label "画像" %>
+					<%= f.file_field :image %><br>
+					<%= f.label "動画" %>
+					<%= f.file_field :video %><br>
+					<%= f.submit "応答",class: "commentSubmit"%>
+				<% end %>
+			</div>
+		</div>
+	</div>
+<% end %>
+<% @comments.each do |comment| %>
+	<%= link_to comment_path(comment.id), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
+		<div class="postBox">
+			<div class="userimageAndNameBox">
+				<% @users.each do |user| %>
+					<% if user.image? %>
+						<% if user.id == comment.user_id %>
+							<div class="imageBox">
+								<object>
+									<%= link_to user_path(user) do %>
+										<%= image_tag user.image.to_s,class: "user_image" %>
+									<% end %>
+								</object>
+							</div>
+							<object>
+								<h4 class="user_nameText">
+									<%= link_to user.name ,user_path(user) ,class: "link_toUser_name"%>
+								</h4>
+							</object>
+						<% end %>
+					<% else %>
+							<% if user.id == comment.user_id %>
+								<object>
+									<%= link_to user_path(user) do %>
+										<%= image_tag "人物アイコン.png",class: "user_image" %>
+									<% end %>
+								</object>
+								<object>
+									<h4 class="user_nameText">
+										<%= link_to user.name ,user_path(user) ,class: "link_toUser_name"%>
+									</h4>
+								</object>
+							<% end %>
+					<% end %>
+				<% end %>
+			</div>
+				<% if user_signed_in? %>
+					<% if comment.user_id == current_user.id %>
+						<object>
+						<br>
+							<%= link_to "DELETE", comment_path(comment.id), method: :delete,class: "deletePost"%>
+						</object>
+					<% end %>
+				<% end %>
+			<div class="postAtagBox">
+				<%= simple_format comment.content,class: "post_body"%>
+				<div class="postideoAndImage">
+					<% if comment.video? %>
+						<%= video_tag comment.video, :autoplay => true, :loop => true,controls: true, autobuffer: true ,class: "Postvideo"%>
+						<br>
+					<% end %>
+					<% if comment.image? %>
+						<%= image_tag comment.image.url,class: "imagePost" %>
+					<% end %>
+				</div>
+				<div class="indexActionMenuBox">
+					<%= image_tag "ハートのマーク2.png", width: "30", height: "30", class: "actionbutton"%>
+					<p class="actionbuttonCount"><%= %></p>
+					<%= image_tag "message (1).png",width: "30", height: "30", class: "actionbutton" %>
+					<p class="actionbuttonCount"><%= %></p>
+					<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+					<%= %>
+				</div>
+			</div>
+			<div class="messageCommentBox">
+				<% unless comment.reply_comment == nil %>
+					<%= @comments.find(comment.reply_comment).content %>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+		<div class="commentformBox">
+			<%= form_with model: @comment, local: true do |f|%>
+				<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
+				<%= f.hidden_field :post_id, :value => @post.id %><br>
+				<%= f.label "画像" %>
+				<%= f.file_field :image %><br>
+				<%= f.label "動画" %>
+				<%= f.file_field :video %><br>
+				<%= f.hidden_field :reply_comment, :value => comment.id %>
+				<%= f.submit "応答",class: "commentSubmit"%>
+			<% end %>
+		</div>
+<% end %>
+<script>
+	$(function(){
+		$('.js-modal-open').on('click', function(){
+			$('.js-modal').fadeIn('slow');
+			// $('.index_post_allBox').css('width', '100%');
+			return false;
+		});
+		$('.js-modal-close').on('click', function(){
+			$('.js-modal').fudeOut('slow');
+			// $('.index_post_allBox').css('width', '850px;');
+			return false;
+		});
+	})
+	var video = document.getElementsByClassName('Postvideo');
+    for(var a of video){
+      a.volume = 0;
+    }
+    document.getElementById('video').volume = 0;
+
+</script>

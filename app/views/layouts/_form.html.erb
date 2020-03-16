@@ -1,0 +1,8 @@
+
+	<%= form_with model: @post, local: true do |f| %>
+		<%= f.text_area :body ,class: "content_body", placeholder: "今何が起きていますか？"%><br>
+		<%= f.text_field :tag_list, value: @post.tag_list.join(',') %><br>
+		<%= f.file_field :image %><br>
+		<%= f.file_field :video %><br>
+		<%= f.submit "Tweet", class: "commentSubmit" %>
+	<% end %>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TwitterCloneApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <div class="appAll">
+        <div class="topBox">
+            <div class="topMaeBox">
+                <%= link_to root_path ,data: {"turbolinks" => false} do %>
+                    <%= image_tag "twittericon (1).png",class: "top_image" %>
+                <% end %>
+                <br>
+                 <%= link_to posts_search_path ,data: {"turbolinks" => false} do %>
+                     <%= image_tag "検索アイコン1 (1).png" ,class: "search_image" %>
+                 <% end %>
+                 <br>
+                <%= link_to "",class: "js-modal-open2" ,  data: {"turbolinks" => false} do %>
+                   <%= image_tag "twitternew.png", class: "twitternew_image"%>
+                <% end %>
+                 <br>
+                <% if user_signed_in? %>
+                    <% if current_user.image? %>
+                        <%= link_to user_path(current_user.id),data: {"turbolinks" => false} do %>
+                            <%= image_tag current_user.image.to_s, class: "user_image" %>
+                        <% end %>
+                    <% else %>
+                        <%= link_to user_path(current_user.id) ,data: {"turbolinks" => false} do %>
+                            <%= image_tag "人物アイコン.png", class: "user_image" %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+                 <br>
+                <% if user_signed_in? %>
+                   <%= link_to "ログアウト", destroy_user_session_path ,method: :delete, class: "login", data: {"turbolinks" => false} %>
+                <% else %>
+                　  <%= link_to "ログイン", new_user_session_path,class: "login", data: {"turbolinks" => false} %>
+            　      <%= link_to "新規登録", new_user_registration_path ,class: "logout", data: {"turbolinks" => false} %>
+         　      <% end %>
+            </div>
+        </div>
+        <div class="modal2 js-modal2">
+            <div class="modal__bg2 js-modal-close2"></div>
+                <div class="modal__content2">
+                    <div class="newPostformDisplay">
+                        <%= link_to "",class: "js-modal-close2 batsu" ,  data: {"turbolinks" => false} do %>
+                            <%= image_tag "batu (1).png", width: "30", height: "30" %>
+                        <% end %>
+                        <%= render 'layouts/form' %>
+                    </div>
+                </div>
+        </div>
+
+        <div class="index_post_allBox">
+            <%= yield %>
+        </div>
+    </div>
+    <script>
+    $(function(){
+        $('.twitternew_image').click(function(){
+            $('.newPostformDisplay').fadeIn('slow');
+            $('.newPostformDisplay').css('display', 'block');
+        })
+         $('.js-modal-open2').on('click', function(){
+            $('.js-modal2').fadeIn('slow');
+            // $('.index_post_allBox').css('width', '100%');
+            return false;
+        });
+        $('.js-modal-close2').on('click', function(){
+            $('.js-modal2').fudeOut('slow');
+            // $('.index_post_allBox').css('width', '850px;');
+            return false;
+        });
+    });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.userIconShow{
+	border-radius: 50%;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ddd;
+}
+.UserimageAndName{
+	display: flex;
+}
+.profileEditAndAcount{
+	margin-bottom: 5%;
+}

@@ -1,0 +1,10 @@
+<%= @comment.content %><br>
+<%#= @comment.commentlikes_users.count.to_s %>
+<% if current_user.already_liked?(@comment) %>
+	<%= link_to "いいねをとりけす", comment_commentlike_path(@comment), method: :delete %>
+<% else %>
+	<%= link_to "いいね", comment_commentlikes_path(@comment) ,method: :post %>
+<% end %>
+<%# @comment.liked_users.each do |user| %>
+	<%#= user.name %><br>
+<%# end %>
