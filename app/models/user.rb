@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
-  has_many :comment, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :commentlikes, dependent: :destroy
   has_many :commentlikes_comments, through: :commentlikes, source: :comment
   def update_without_current_password(params, *options)
