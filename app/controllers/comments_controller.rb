@@ -23,6 +23,7 @@ class CommentsController < ApplicationController
 		@new_comments = Comment.new
 		@comments = Comment.all
 		@users = User.all
+		@posts = Post.all
 	end
 
 	private

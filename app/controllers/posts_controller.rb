@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   	@posts = Post.all.order(created_at: :desc)
     @users = User.all
     @comments = Comment.all.order(created_at: :desc)
+    @retweets = Retweet.all
   end
 
   def new
@@ -23,7 +24,6 @@ class PostsController < ApplicationController
     @like = Like.new
     @comment = Comment.new
     @users = User.all
-    @comments = Comment.all
     @likePosts = @post.likes
     @commentPosts = @post.comments
     @retweet = Retweet.new
@@ -37,8 +37,9 @@ class PostsController < ApplicationController
   def search
     @q = Post.ransack(params[:q])
     @posts = @q.result(distinct: true)
-    @comments = Comment.all
+    @comments = Comment.all.order(created_at: :desc)
     @users = User.all
+    @RetweetS = Retweet.all.order(created_at: :desc)
   end
   private
 

@@ -45,3 +45,22 @@
 	height: 100px;
 	width: 3px;
 }
+.post_body{
+	word-wrap: break-word;
+	font-family: font-family, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+.userimageAndNameBox{
+	display: flex;
+}
+
+.postBox{
+	margin-bottom: 10%;
+	border: 1px solid #ddd;
+}
+
+.postBox:hover{
+	/*transition: background-color 0.5s ease ;*/
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	background-color: rgb(245,248,250);
+}

@@ -1,113 +1,177 @@
-<div class="messageCommentBox">
+<% unless @comment.reply_comment == nil %>
+	<div class="messageCommentBox">
+		<div class="postBox">
+			<div class="userimageAndNameBox">
+					<% @users.each do |user| %>
+						<% if user.image? %>
+							<% if user.id == @comments.find(@comment.reply_comment).user_id %>
+								<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
+									<%= image_tag user.image.to_s ,class: "user_image" %>
+									<h4 class="user_nameText">
+										<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
+									</h4>
+								<% end %>
+							<% end %>
+						<% else %>
+							<% if user.id == @comments.find(@comment.reply_comment).user_id %>
+								<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
+									<%= image_tag "人物アイコン.png", class: "user_image" %>
+									<h4 class="user_nameText">
+										<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
+									</h4>
+								<% end %>
+							<% end %>
+						<% end %>
+					<% end %>
+					<br>
+			</div>
+					<div class="postAtagBox">
+						<%= @comments.find(@comment.reply_comment).content %><br>
+						<div class="postideoAndImage">
+							<% if @comments.find(@comment.reply_comment).video? %>
+								<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
+							<% end %>
+							<% if @comments.find(@comment.reply_comment).image? %>
+								<%= image_tag  @comments.find(@comment.reply_comment).image.url,class: "imagePost", id: "image" %>
+							<% end %>
+						</div>
+					<%= render 'tag_list' , tag_list: @post.tag_list%>
+				</div>
+		</div>
+</div>
+		<div class="border"></div>
+<% end %>
+
+<% @posts.each do |post| %>
+	<% if post.id == @comment.post_id %>
+		<div class="messageCommentBox">
+			<%= link_to post_path(post), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
+				<div class="postBox">
+					<div class="userimageAndNameBox">
+						<% @users.each do |user| %>
+							<% if post.id == @comment.post_id %>
+								<% if user.image? %>
+									<% if user.id == post.user_id %>
+										<%= link_to user_path(post.user_id) , data: {"turbolinks" => false} do %>
+											<%= image_tag user.image.to_s ,class: "user_image" %>
+											<h4 class="user_nameText">
+												<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+											</h4>
+										<% end %>
+									<% end %>
+								<% else %>
+									<% if user.id == post.user_id %>
+										<object>
+											<%= link_to user_path(post.user_id) , data: {"turbolinks" => false} do %>
+												<%= image_tag "人物アイコン.png", class: "user_image" %>
+											<% end %>
+										</object>
+										<object>
+											<h4 class="user_nameText">
+												<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+											</h4>
+										</object>
+									<% end %>
+								<% end %>
+							<% end %>
+						<% end %>
+					</div>
+					<% if post.id == @comment.post_id %>
+						<div class="postAtagBox">
+							<%= simple_format post.body, class: "post_body" %>
+							<div class="postideoAndImage">
+								<% if post.video? %>
+									<%= video_tag post.video, :autoplay => true, :loop => true,controls: true, autobuffer: true ,class: "Postvideo"%>
+								<br>
+								<% end %>
+								<% if post.image? %>
+									<%= image_tag post.image.url,class: "imagePost" %>
+								<% end %>
+							</div>
+							<%= render 'tag_list', tag_list: post.tag_list %>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+<% end %>
+<% @posts.each do |post| %>
+	<% if post.id == @comment.post_id %>
+		<div class="border"></div>
+	<% end %>
+<% end %>
+<div class="ShowPostBox">
 	<div class="userimageAndNameBox">
-		<% unless @comment.reply_comment == nil %>
-			<% @users.each do |user| %>
-				<% if user.image? %>
-					<% if user.id == @comments.find(@comment.reply_comment).user_id %>
-						<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
-							<%= image_tag user.image.to_s ,class: "user_image" %>
-							<h4 class="user_nameText">
-								<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
-							</h4>
-						<% end %>
-					<% end %>
-				<% else %>
-					<% if user.id == @comments.find(@comment.reply_comment).user_id %>
-						<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
-							<%= image_tag "人物アイコン.png", class: "user_image" %>
-							<h4 class="user_nameText">
-								<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
-							</h4>
-						<% end %>
-					<% end %>
+		<% @users.each do |user| %>
+			<% if user.image? %>
+				<% if @comment.user_id == user.id %>
+					<div class="imageBox">
+						<object>
+							<%= link_to user_path(user) , data: {"turbolinks" => false} do %>
+								<%= image_tag user.image.to_s,class: "user_image" %>
+							<% end %>
+						</object>
+					</div>
 				<% end %>
 			<% end %>
-			<br>
+			<% unless user.image? %>
+				<% if @comment.user_id == user.id %>
+					<div class="imageBox">
+						<object>
+							<%= link_to user_path(user)  , data: {"turbolinks" => false} do %>
+								<%= image_tag "人物アイコン.png",class: "user_image" %>
+							<% end %>
+						</object>
+					</div>
+				<% end %>
+			<% end %>
+			<% if @comment.user_id == user.id %>
+				<object>
+					<h4 class="user_nameText">
+						<%= link_to user.name ,user_path(user)  , data: {"turbolinks" => false},class: "link_toUser_name"%>
+					</h4>
+				</object>
+			<% end %>
+		<% end %>
 	</div>
-			<div class="postAtagBox">
-				<%= @comments.find(@comment.reply_comment).content %><br>
-				<div class="postideoAndImage">
-					<% if @comments.find(@comment.reply_comment).video? %>
-						<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
-					<% end %>
-					<% if @comments.find(@comment.reply_comment).image? %>
-						<%= image_tag  @comments.find(@comment.reply_comment).image.url,class: "imagePost", id: "image" %>
-					<% end %>
-				</div>
-			<%= render 'tag_list' , tag_list: @post.tag_list%>
+	<div class="postAtagBox">
+		<%= simple_format @comment.content ,class: "post_body showBody" %><br>
+		<div class="postideoAndImage">
+			<% if @comment.video? %>
+				<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
+			<% end %>
+			<% if @post.image? %>
+				<%= image_tag @comment.image.url,class: "imagePost", id: "image" %>
+			<% end %>
 		</div>
-			<div class="border"></div>
-		<% end %>
-</div>
-<div class="userimageAndNameBox">
-	<% @users.each do |user| %>
-		<% if user.image? %>
-			<% if @comment.user_id == user.id %>
-				<div class="imageBox">
-					<object>
-						<%= link_to user_path(user) , data: {"turbolinks" => false} do %>
-							<%= image_tag user.image.to_s,class: "user_image" %>
-						<% end %>
-					</object>
-				</div>
-			<% end %>
-		<% end %>
-		<% unless user.image? %>
-			<% if @comment.user_id == user.id %>
-				<div class="imageBox">
-					<object>
-						<%= link_to user_path(user)  , data: {"turbolinks" => false} do %>
-							<%= image_tag "人物アイコン.png",class: "user_image" %>
-						<% end %>
-					</object>
-				</div>
-			<% end %>
-		<% end %>
-		<% if @comment.user_id == user.id %>
-			<object>
-				<h4 class="user_nameText">
-					<%= link_to user.name ,user_path(user)  , data: {"turbolinks" => false},class: "link_toUser_name"%>
-				</h4>
-			</object>
-		<% end %>
-	<% end %>
-</div>
-<div class="postAtagBox">
-	<%= simple_format @comment.content ,class: "post_body showBody" %><br>
-	<div class="postideoAndImage">
-		<% if @comment.video? %>
-			<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
-		<% end %>
-		<% if @post.image? %>
-			<%= image_tag @comment.image.url,class: "imagePost", id: "image" %>
-		<% end %>
 	</div>
-</div>
-<%#= render 'tag_list' , tag_list: @post.tag_list%>
-<%#= @comment.commentlikes_users.count.to_s %>
+	<%#= render 'tag_list' , tag_list: @post.tag_list%>
+	<%#= @comment.commentlikes_users.count.to_s %>
 
-<div class="indexActionMenuBox">
-	<% if current_user.already_likedComment?(@comment) %>
-		<%= link_to comment_commentlike_path(@comment), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
-			<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30", class: "actionbutton"%>
-		<% end %>
-	<% else %>
-		<%= link_to comment_commentlikes_path(@comment), method: :post, data: {"turbolinks" => false},class: "likeLink" do %>
-			<%= image_tag "ハートのマーク2.png", width: "30", height:"30", class: "actionbutton" %>
-		<% end %>
-	<% end %>
-	<% link_to  %>
-	<p class="actionbuttonCount"><%= %></p>
-	<div class="messageBox">
-		<div class="content">
-			<%= link_to "", class: "js-modal-open"  do %>
-				<%= image_tag "message (1).png", width: "30", height: "30" %>
+	<div class="indexActionMenuBox">
+		<% if current_user.already_likedComment?(@comment) %>
+			<%= link_to comment_commentlike_path(@comment), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
+				<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30", class: "actionbutton"%>
 			<% end %>
+		<% else %>
+			<%= link_to comment_commentlikes_path(@comment), method: :post, data: {"turbolinks" => false},class: "likeLink" do %>
+				<%= image_tag "ハートのマーク2.png", width: "30", height:"30", class: "actionbutton" %>
+			<% end %>
+		<% end %>
+		<% link_to  %>
+		<p class="actionbuttonCount"><%= %></p>
+		<div class="messageBox">
+			<div class="content">
+				<%= link_to "", class: "js-modal-open"  do %>
+					<%= image_tag "message (1).png", width: "30", height: "30" %>
+				<% end %>
+			</div>
 		</div>
-	</div>
-	<p class="actionbuttonCount"><%= %></p>
-	<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
-	<%= %>
+		<p class="actionbuttonCount"><%= %></p>
+		<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+		<%= %>
+</div>
 </div>
 <div class="modal js-modal">
 	<div class="modal__bg js-modal-close"></div>
@@ -151,6 +215,11 @@
     document.getElementById('video').volume = 0;
 
 </script>
+<style>
+	.ShowPostBox{
+	margin-top: 10%;
+}
+</style>
 <%# @comment.liked_users.each do |user| %>
 	<%#= user.name %><br>
 <%# end %>

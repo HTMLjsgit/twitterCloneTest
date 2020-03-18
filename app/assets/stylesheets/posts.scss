@@ -185,6 +185,18 @@ a{
 .showBody{
 	font-size: 25px;
 }
+.retweetAtag{
+	text-decoration: none;
+	color: black;
+}
+.retweetAtag:hover{
+	text-decoration: underline;
+}
+.retweetPtag{
+	font-size: 10px;
+	color: #ddd;
+	font-weight: bold;
+}
 @media screen and (max-width:960px){
 	.modal__bg{
 		margin-left: 15px;

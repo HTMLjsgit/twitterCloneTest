@@ -156,7 +156,7 @@
 		</div>
 	</div>
 <% end %>
-<% @comments.each do |comment| %>
+<% @commentPosts.each do |comment| %>
 	<%= link_to comment_path(comment.id), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
 		<div class="postBox">
 			<div class="userimageAndNameBox">

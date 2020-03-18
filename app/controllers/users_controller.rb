@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @posts = @user.posts
     @likes = @user.likes
     @comments = @user.comments
+    @retweets = @user.retweets
+    @postsAll = Post.all
+    @retweetsAll = Retweet.all
+    @usersAll = User.all
   end
 
   def edit
