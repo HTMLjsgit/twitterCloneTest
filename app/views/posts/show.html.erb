@@ -50,10 +50,10 @@
 						<%= image_tag @post.image.url,class: "imagePost", id: "image" %>
 					<% end %>
 				</div>
-			<%= render 'tag_list' , tag_list: @post.tag_list%>
+			<%= render 'tag_list' , tag_list: @comment.tag_list%>
 		</div>
 	<br>
-	<%= @likePosts.count.to_s %> いいね
+		<%= @likePosts.count.to_s %> いいね
 	<% if user_signed_in? %>
 		<div class="actionMenuBox">
 			<div class="likeBox">
@@ -69,14 +69,21 @@
 			</div>
 			<div class="messageBox">
 				<div class="content">
-					<a class="js-modal-open" href="">
+					<%= link_to "", class: "js-modal-open" do %>
 						<%= image_tag "message (1).png", width: "30", height: "30" %>
-					</a>
+					<% end %>
 				</div>
 			</div>
 			<div class="retweetBox">
-				<%= link_to root_path do %>
-					<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+				<% if current_user.already_likedRetweet?(@post) %>
+					<%= link_to post_retweet_path(@post), method: :delete do %>
+						<%= image_tag "retweet (1).png", width: "30",height: "30" %>
+						リツイート削除
+					<% end %>
+				<% else %>
+					<%= link_to post_retweets_path(@post), method: :post do %>
+						<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+					<% end %>
 				<% end %>
 			</div>
 		</div>
@@ -206,32 +213,16 @@
 				</div>
 				<div class="indexActionMenuBox">
 					<%= image_tag "ハートのマーク2.png", width: "30", height: "30", class: "actionbutton"%>
-					<p class="actionbuttonCount"><%= %></p>
+					<%= comment.commentlikes.count.to_s %>
+					<p class="actionbuttonCount"></p>
 					<%= image_tag "message (1).png",width: "30", height: "30", class: "actionbutton" %>
-					<p class="actionbuttonCount"><%= %></p>
-					<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
-					<%= %>
+					<p class="actionbuttonCount"></p>
+							<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
 				</div>
-			</div>
-			<div class="messageCommentBox">
-				<% unless comment.reply_comment == nil %>
-					<%= @comments.find(comment.reply_comment).content %>
-				<% end %>
 			</div>
 		</div>
 	<% end %>
-		<div class="commentformBox">
-			<%= form_with model: @comment, local: true do |f|%>
-				<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
-				<%= f.hidden_field :post_id, :value => @post.id %><br>
-				<%= f.label "画像" %>
-				<%= f.file_field :image %><br>
-				<%= f.label "動画" %>
-				<%= f.file_field :video %><br>
-				<%= f.hidden_field :reply_comment, :value => comment.id %>
-				<%= f.submit "応答",class: "commentSubmit"%>
-			<% end %>
-		</div>
+
 <% end %>
 <script>
 	$(function(){

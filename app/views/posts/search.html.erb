@@ -57,7 +57,7 @@
 				<%= render 'tag_list', tag_list: post.tag_list %>
 				<div class="indexActionMenuBox">
 					<%= image_tag "ハートのマーク2.png", width: "30", height: "30", class: "actionbutton"%>
-					<p class="actionbuttonCount"><%= post.comment.count%></p>
+					<p class="actionbuttonCount"><%= post.comments.count%></p>
 					<%= image_tag "message (1).png",width: "30", height: "30", class: "actionbutton" %>
 					<p class="actionbuttonCount"><%= post.likes.count %></p>
 					<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
@@ -68,7 +68,7 @@
 	<% end %>
 <% end %>
 <% @comments.each do |comments| %>
-	<%= link_to post_path(comments.post_id), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
+	<%= link_to comment_path(comments.id), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
 		<div class="postBox">
 			<div class="userimageAndNameBox">
 				<% @users.each do |user| %>

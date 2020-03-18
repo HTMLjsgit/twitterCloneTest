@@ -6,6 +6,7 @@ class Post < ApplicationRecord
 	has_many :likes,dependent: :destroy
 	has_many :liked_users, through: :likes, source: :user
 	has_many :comments, dependent: :destroy
+	has_many :retweets, dependent: :destroy
 	validates :body, presence: :true, length: { maximum: 200}
 	has_many :replies, class_name: Comment.to_s, foreign_key: :reply_comment, dependent: :destroy
 end

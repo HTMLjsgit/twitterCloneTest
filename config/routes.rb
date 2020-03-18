@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   get 'posts/search'
   resources :posts,only: [:create, :new, :show, :destroy] do
   	resources :likes, only: [:create, :destroy]
+    resources :retweets, only: [:create, :destroy]
   end
-
   resources :comments do
     resources :commentlikes, only: [:create, :destroy]
   end

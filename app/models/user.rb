@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :commentlikes, dependent: :destroy
   has_many :commentlikes_comments, through: :commentlikes, source: :comment
+  has_many :retweets, dependent: :destroy
   def update_without_current_password(params, *options)
 	  params.delete(:current_password)
 
@@ -29,7 +30,11 @@ class User < ApplicationRecord
     self.likes.exists?(post_id: post.id)
   end
 
-  def already_liked?(comment)
+  def already_likedComment?(comment)
     self.commentlikes.exists?(comment_id: comment.id)
+  end
+
+  def already_likedRetweet?(post)
+      self.retweets.exists?(post_id: post.id)
   end
 end

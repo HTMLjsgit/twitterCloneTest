@@ -21,11 +21,13 @@ class CommentsController < ApplicationController
 	def show
 		@like = Commentlike.new
 		@new_comments = Comment.new
+		@comments = Comment.all
+		@users = User.all
 	end
 
 	private
 	def comment_params
-		params.require(:comment).permit(:content, :post_id,:image, :video,:reply_comment)
+		params.require(:comment).permit(:content, :post_id,:image, :video,:reply_comment,:tag_list)
 	end
 	def comment_find
 		@comment = Comment.find params[:id]

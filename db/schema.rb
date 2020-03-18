@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_16_191151) do
+ActiveRecord::Schema.define(version: 2020_03_17_222743) do
 
   create_table "commentlikes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "post_id"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2020_03_16_191151) do
     t.datetime "updated_at", null: false
     t.integer "post_id"
     t.integer "user_id"
+  end
+
+  create_table "retweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_retweets_on_post_id"
+    t.index ["user_id"], name: "index_retweets_on_user_id"
   end
 
   create_table "taggings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -101,5 +110,7 @@ ActiveRecord::Schema.define(version: 2020_03_16_191151) do
   add_foreign_key "commentlikes", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
+  add_foreign_key "retweets", "posts"
+  add_foreign_key "retweets", "users"
   add_foreign_key "taggings", "tags"
 end

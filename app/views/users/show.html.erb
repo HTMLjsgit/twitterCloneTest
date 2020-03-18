@@ -37,7 +37,7 @@
 					</object>
 				<% else %>
 					<object>
-						<%= link_to user_path(post.user_id) do %>
+						<%= link_to user_path(@user) do %>
 							<%= image_tag "人物アイコン.png",class: "user_image" %>
 						<% end %>
 					</object>
@@ -86,7 +86,7 @@
 					</object>
 				<% else %>
 					<object>
-						<%= link_to user_path(post.user_id) do %>
+						<%= link_to user_path(@user) do %>
 							<%= image_tag "人物アイコン.png",class: "user_image" %>
 						<% end %>
 					</object>

@@ -1,3 +1,47 @@
 // Place all the styles related to the comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.modal{
+	display: none;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.modal__bg{
+	background: rgba(0,0,0,0.3);
+	height: 100vh;
+	position: absolute;
+	width: 1000vh;
+	left: -98px;
+	margin-left: -320px;
+}
+.modal__content{
+	background-color: #fff;
+	left: 25%;
+	padding: 40px;
+	position: absolute;
+	top: 10px;
+	transform: translate(-50%, 25%);
+	width: 40%;
+	height: 60%;
+	border-radius: 15px;
+}
+.indexActionMenuBox{
+	display: flex;
+	justify-content: space-around;
+}
+.messageBox{
+}
+.messageCommentBox{
+}
+.border{
+	border-left: 1px solid #000000;
+	margin-left: 2%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	height: 100px;
+	width: 3px;
+}
