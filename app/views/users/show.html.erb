@@ -18,6 +18,7 @@
 		<% end %>
 	<% end %>
 </div>
+<%= render 'follow_button', user: @user %>
 <% @postsAll.each do |post| %>
 	<% @retweetsAll.each do |retweet| %>
 		<%= link_to post_path(retweet.post_id), data: {"turbolinks" => false}, class: "link_toBoxAtag" do %>

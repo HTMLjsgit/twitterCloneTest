@@ -13,6 +13,10 @@ class User < ApplicationRecord
   has_many :commentlikes, dependent: :destroy
   has_many :commentlikes_comments, through: :commentlikes, source: :comment
   has_many :retweets, dependent: :destroy
+  has_many :relationships, foreign_key: 'user_id'
+  has_many :followings, through: :relationships, source: :follow
+  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
+  has_many :followers, through: :reverse_of_relationships, source: :user
   def update_without_current_password(params, *options)
 	  params.delete(:current_password)
 
@@ -36,5 +40,20 @@ class User < ApplicationRecord
 
   def already_likedRetweet?(post)
       self.retweets.exists?(post_id: post.id)
+  end
+
+  def follow(other_user)
+    unless self == other_user
+      self.relationships.find_or_create_by(follow_id: other_user.id)
+    end
+  end
+
+  def unfollow(other_user)
+    relationship = self.relationships.find_by(follow_id: other_user.id)
+    relationship.destroy if relationship
+  end
+
+  def following?(other_user)
+    self.followings.include?(other_user)
   end
 end
