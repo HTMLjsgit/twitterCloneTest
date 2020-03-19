@@ -1,47 +1,50 @@
-<% unless @comment.reply_comment == nil %>
-	<div class="messageCommentBox">
-		<div class="postBox">
-			<div class="userimageAndNameBox">
-					<% @users.each do |user| %>
-						<% if user.image? %>
-							<% if user.id == @comments.find(@comment.reply_comment).user_id %>
-								<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
-									<%= image_tag user.image.to_s ,class: "user_image" %>
-									<h4 class="user_nameText">
-										<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
-									</h4>
+	<% unless @comment.reply_comment == nil %>
+		<div class="messageCommentBox">
+			<div class="postBox">
+				<div class="userimageAndNameBox">
+						<% @users.each do |user| %>
+							<% if user.image? %>
+								<% if user.id == @comments.find(@comment.reply_comment).user_id %>
+									<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
+										<%= image_tag user.image.to_s ,class: "user_image" %>
+										<h4 class="user_nameText">
+											<object>
+												<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
+											</object>
+										</h4>
+									<% end %>
 								<% end %>
-							<% end %>
-						<% else %>
-							<% if user.id == @comments.find(@comment.reply_comment).user_id %>
-								<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
-									<%= image_tag "人物アイコン.png", class: "user_image" %>
-									<h4 class="user_nameText">
-										<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
-									</h4>
+							<% else %>
+								<% if user.id == @comments.find(@comment.reply_comment).user_id %>
+									<%= link_to user_path(@comments.find(@comment.reply_comment).user_id) , data: {"turbolinks" => false} do %>
+										<%= image_tag "人物アイコン.png", class: "user_image" %>
+										<h4 class="user_nameText">
+											<object>
+												<%= link_to user.name,user_path(user) ,class: "link_toUser_name"%>
+											</object>
+										</h4>
+									<% end %>
 								<% end %>
 							<% end %>
 						<% end %>
-					<% end %>
-					<br>
-			</div>
-					<div class="postAtagBox">
-						<%= @comments.find(@comment.reply_comment).content %><br>
-						<div class="postideoAndImage">
-							<% if @comments.find(@comment.reply_comment).video? %>
-								<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
-							<% end %>
-							<% if @comments.find(@comment.reply_comment).image? %>
-								<%= image_tag  @comments.find(@comment.reply_comment).image.url,class: "imagePost", id: "image" %>
-							<% end %>
-						</div>
-					<%= render 'tag_list' , tag_list: @post.tag_list%>
+						<br>
 				</div>
-		</div>
-</div>
-		<div class="border"></div>
-<% end %>
-
+						<div class="postAtagBox">
+							<%= @comments.find(@comment.reply_comment).content %><br>
+							<div class="postideoAndImage">
+								<% if @comments.find(@comment.reply_comment).video? %>
+									<%= video_tag @comment.video, :autoplay => true, :loop => true ,width: "500px", height: "300px", controls: true, autobuffer: true ,id: "video",class: "Postvideo"%>
+								<% end %>
+								<% if @comments.find(@comment.reply_comment).image? %>
+									<%= image_tag  @comments.find(@comment.reply_comment).image.url,class: "imagePost", id: "image" %>
+								<% end %>
+							</div>
+						<%= render 'tag_list' , tag_list: @post.tag_list%>
+					</div>
+			</div>
+	</div>
+			<div class="border"></div>
+	<% end %>
 <% @posts.each do |post| %>
 	<% if post.id == @comment.post_id %>
 		<div class="messageCommentBox">
@@ -52,12 +55,16 @@
 							<% if post.id == @comment.post_id %>
 								<% if user.image? %>
 									<% if user.id == post.user_id %>
-										<%= link_to user_path(post.user_id) , data: {"turbolinks" => false} do %>
-											<%= image_tag user.image.to_s ,class: "user_image" %>
-											<h4 class="user_nameText">
-												<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
-											</h4>
-										<% end %>
+										<object>
+											<%= link_to user_path(post.user_id) , data: {"turbolinks" => false} do %>
+												<%= image_tag user.image.to_s ,class: "user_image" %>
+												<h4 class="user_nameText">
+													<object>
+														<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+													</object>
+												</h4>
+											<% end %>
+										</object>
 									<% end %>
 								<% else %>
 									<% if user.id == post.user_id %>
@@ -68,7 +75,9 @@
 										</object>
 										<object>
 											<h4 class="user_nameText">
-												<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+												<object>
+													<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+												</object>
 											</h4>
 										</object>
 									<% end %>
@@ -129,7 +138,9 @@
 			<% if @comment.user_id == user.id %>
 				<object>
 					<h4 class="user_nameText">
-						<%= link_to user.name ,user_path(user)  , data: {"turbolinks" => false},class: "link_toUser_name"%>
+						<object>
+							<%= link_to user.name ,user_path(user)  , data: {"turbolinks" => false},class: "link_toUser_name"%>
+						</object>
 					</h4>
 				</object>
 			<% end %>
@@ -148,53 +159,52 @@
 	</div>
 	<%#= render 'tag_list' , tag_list: @post.tag_list%>
 	<%#= @comment.commentlikes_users.count.to_s %>
-
-	<div class="indexActionMenuBox">
-		<% if current_user.already_likedComment?(@comment) %>
-			<%= link_to comment_commentlike_path(@comment), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
-				<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30", class: "actionbutton"%>
+<% if user_signed_in? %>
+		<div class="indexActionMenuBox">
+			<% if current_user.already_likedComment?(@comment) %>
+				<%= link_to comment_commentlike_path(@comment), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
+					<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30", class: "actionbutton"%>
+				<% end %>
+			<% else %>
+				<%= link_to comment_commentlikes_path(@comment), method: :post, data: {"turbolinks" => false},class: "likeLink" do %>
+					<%= image_tag "ハートのマーク2.png", width: "30", height:"30", class: "actionbutton" %>
+				<% end %>
 			<% end %>
-		<% else %>
-			<%= link_to comment_commentlikes_path(@comment), method: :post, data: {"turbolinks" => false},class: "likeLink" do %>
-				<%= image_tag "ハートのマーク2.png", width: "30", height:"30", class: "actionbutton" %>
+			<p class="actionbuttonCount"><%= %></p>
+			<div class="messageBox">
+				<div class="content">
+					<%= link_to "", class: "js-modal-open"  do %>
+						<%= image_tag "message (1).png", width: "30", height: "30" %>
+					<% end %>
+				</div>
+			</div>
+			<p class="actionbuttonCount"><%= %></p>
+			<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+			<%= %>
+	</div>
+	</div>
+	<div class="modal js-modal">
+		<div class="modal__bg js-modal-close"></div>
+		<div class="modal__content">
+			<%= link_to "",class: "js-modal-close batsu" ,  data: {"turbolinks" => false} do %>
+				<%= image_tag "batu (1).png", width: "30", height: "30" %>
 			<% end %>
-		<% end %>
-		<% link_to  %>
-		<p class="actionbuttonCount"><%= %></p>
-		<div class="messageBox">
-			<div class="content">
-				<%= link_to "", class: "js-modal-open"  do %>
-					<%= image_tag "message (1).png", width: "30", height: "30" %>
+			<%= simple_format @comment.content.truncate(20),class: "post_body" %>
+			<div class="commentformBox">
+				<%= form_with model: @new_comments, local: true do |f|%>
+					<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
+					<%= f.label "画像" %>
+					<%= f.file_field :image %><br>
+					<%= f.label "動画" %>
+					<%= f.file_field :video %><br>
+					<%= f.text_field :tag_list %><br>
+					<%= f.hidden_field :reply_comment, :value => @comment.id %>
+					<%= f.submit "応答",class: "commentSubmit"%>
 				<% end %>
 			</div>
 		</div>
-		<p class="actionbuttonCount"><%= %></p>
-		<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
-		<%= %>
-</div>
-</div>
-<div class="modal js-modal">
-	<div class="modal__bg js-modal-close"></div>
-	<div class="modal__content">
-		<%= link_to "",class: "js-modal-close batsu" ,  data: {"turbolinks" => false} do %>
-			<%= image_tag "batu (1).png", width: "30", height: "30" %>
-		<% end %>
-		<%= simple_format @comment.content.truncate(20),class: "post_body" %>
-		<div class="commentformBox">
-			<%= form_with model: @new_comments, local: true do |f|%>
-				<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
-				<%= f.label "画像" %>
-				<%= f.file_field :image %><br>
-				<%= f.label "動画" %>
-				<%= f.file_field :video %><br>
-				<%= f.text_field :tag_list %><br>
-				<%= f.hidden_field :reply_comment, :value => @comment.id %>
-				<%= f.submit "応答",class: "commentSubmit"%>
-			<% end %>
-		</div>
 	</div>
-</div>
-
+<% end %>
 <script>
 	$(function(){
 		$('.js-modal-open').on('click', function(){

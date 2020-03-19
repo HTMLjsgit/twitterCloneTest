@@ -53,10 +53,10 @@
 			<%= render 'tag_list' , tag_list: @comment.tag_list%>
 		</div>
 	<br>
-		<%= @likePosts.count.to_s %> いいね
-	<% if user_signed_in? %>
-		<div class="actionMenuBox">
-			<div class="likeBox">
+	<%= @likePosts.count.to_s %> いいね
+	<div class="actionMenuBox">
+		<div class="likeBox">
+			<% if user_signed_in? %>
 				<% if current_user.already_liked?(@post) %>
 					<%= link_to post_like_path(@post), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
 						<%= image_tag "スタンダードなハートの無料アイコン.png", width: "30", height: "30" %>
@@ -66,27 +66,45 @@
 							<%= image_tag "ハートのマーク2.png", width: "30", height: "30" %>
 					<% end %>
 				<% end %>
-			</div>
-			<div class="messageBox">
-				<div class="content">
-					<%= link_to "", class: "js-modal-open" do %>
+			<% else %>
+				<%= link_to new_user_registration_path, data: {"turbolinks" => false}, class: "likeLink" do %>
+					<%= image_tag "ハートのマーク2.png", width: "30", height: "30" %>
+				<% end %>
+			<% end %>
+		</div>
+		<div class="messageBox">
+			<div class="content">
+				<% if user_signed_in? %>
+					<%= link_to "", class: "js-modal-open", data: {"turbolinks" => false} do %>
 						<%= image_tag "message (1).png", width: "30", height: "30" %>
 					<% end %>
-				</div>
-			</div>
-			<div class="retweetBox">
-				<% if current_user.already_likedRetweet?(@post) %>
-					<%= link_to post_retweet_path(@post), method: :delete do %>
-						<%= image_tag "retweet (1).png", width: "30",height: "30" %>
-						リツイート削除
-					<% end %>
 				<% else %>
-					<%= link_to post_retweets_path(@post), method: :post do %>
-						<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+					<%= link_to new_user_registration_path, data: {"turbolinks" => false} do %>
+						<%= image_tag "message (1).png", width: "30", height: "30" %>
 					<% end %>
 				<% end %>
 			</div>
 		</div>
+		<div class="retweetBox">
+
+			<% if user_signed_in? %>
+				<% if current_user.already_likedRetweet?(@post) %>
+					<%= link_to post_retweet_path(@post), method: :delete , data: {"turbolinks" => false} do %>
+						<%= image_tag "retweet (1).png", width: "30",height: "30" %>
+						リツイート削除
+					<% end %>
+				<% else %>
+					<%= link_to post_retweets_path(@post), method: :post , data: {"turbolinks" => false} do %>
+						<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+					<% end %>
+				<% end %>
+			<% else %>
+				<%= link_to new_user_registration_path, data: {"turbolinks" => false} do %>
+					<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
 	</div>
 
 	<!-- <div class="CommentformBox">
@@ -132,12 +150,16 @@
 				<%= simple_format @post.body.truncate(50), class: "post_body dmBoxpost_body" %>
 				<% @users.each do |user| %>
 					<% if user.image? %>
-						<% if current_user.id == user.id %>
-								<%= image_tag current_user.image.to_s,class: "user_image" %>
+						<% if user_signed_in? %>
+							<% if current_user.id == user.id %>
+									<%= image_tag current_user.image.to_s,class: "user_image" %>
+							<% end %>
 						<% end %>
 					<% else %>
-						<% if current_user.id == user.id %>
-								<%= image_tag "人物アイコン.png",class: "user_image" %>
+						<% if user_signed_in? %>
+							<% if current_user.id == user.id %>
+									<%= image_tag "人物アイコン.png",class: "user_image" %>
+							<% end %>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -154,8 +176,7 @@
 				<% end %>
 			</div>
 		</div>
-	</div>
-<% end %>
+</div>
 <% @commentPosts.each do |comment| %>
 	<%= link_to comment_path(comment.id), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
 		<div class="postBox">
@@ -213,11 +234,11 @@
 				</div>
 				<div class="indexActionMenuBox">
 					<%= image_tag "ハートのマーク2.png", width: "30", height: "30", class: "actionbutton"%>
-					<%= comment.commentlikes.count.to_s %>
-					<p class="actionbuttonCount"></p>
+					<p class="actionbuttonCount"><%= comment.commentlikes.count.to_s %></p>
+					<p class="actionbuttonCount"><%= comment.reply_comment %></p>
 					<%= image_tag "message (1).png",width: "30", height: "30", class: "actionbutton" %>
 					<p class="actionbuttonCount"></p>
-							<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+					<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
 				</div>
 			</div>
 		</div>

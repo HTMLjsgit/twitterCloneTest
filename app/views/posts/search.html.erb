@@ -4,7 +4,84 @@
 		<%= f.submit %>
 	<% end %>
 </div>
-
+<% @posts.each do |post| %>
+	<% @retweets.each do |retweet| %>
+		<%= link_to post_path(retweet.post_id), data: {"turbolinks" => false}, class: "link_toBoxAtag" do %>
+			<% if retweet.post_id == post.id %>
+				<div class="postBox">
+					<% @users.each do |user| %>
+						<% if retweet.user_id == user.id %>
+							<p class="retweetPtag">
+							<object>
+								<%= link_to user.name, user_path(post.user_id) ,class: "retweetAtag"%>
+							</object>
+							がリツイート</p>
+						<% end %>
+					<% end %>
+					<div class="userimageAndNameBox">
+						<% @users.each do |user| %>
+							<% if user.image? %>
+								<% if post.user_id == user.id %>
+									<div class="imageBox">
+										<object>
+											<%= link_to user_path(post.user_id) do %>
+											<%= image_tag user.image.to_s, class: "user_image" %>
+											<% end %>
+										</object>
+									</div>
+									<object>
+										<h4 class="user_nameText">
+											<%= link_to user.name, user_path(retweet.user_id), class: "link_toUser_name" %>
+										</h4>
+									</object>
+								<% end %>
+							<% else %>
+								<% if post.user_id == user.id %>
+									<div class="imageBox">
+										<object>
+											<%= link_to user_path(post.user_id) do %>
+											<%= image_tag "人物アイコン.png",class: "user_image" %>
+											<% end %>
+										</object>
+									</div>
+									<object>
+										<h4 class="user_nameText">
+											<%= link_to user.name, user_path(retweet.user_id), class: "link_toUser_name" %>
+										</h4>
+									</object>
+								<% end %>
+							<% end %>
+						<% end %>
+					</div>
+						<% if post.id == retweet.post_id %>
+							<div class="postAtagBox">
+								<%= simple_format post.body, class: "post_body" %>
+								<div class="postideoAndImage">
+									<% if post.video? %>
+										<%= video_tag post.video, :autoplay => true, :loop => true,controls: true, autobuffer: true ,class: "Postvideo"%>
+										<br>
+									<% end %>
+									<% if post.image? %>
+										<%= image_tag post.image.url,class: "imagePost" %>
+									<% end %>
+								</div>
+								<%= render 'tag_list', tag_list: post.tag_list %>
+								<br>
+								<div class="indexActionMenuBox">
+									<%= image_tag "ハートのマーク2.png", width: "30", height: "30", class: "actionbutton"%>
+									<p class="actionbuttonCount"><%= post.comments.count%></p>
+									<%= image_tag "message (1).png",width: "30", height: "30", class: "actionbutton" %>
+									<p class="actionbuttonCount"><%= post.likes.count %></p>
+									<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+									<%= %>
+								</div>
+							</div>
+						<% end %>
+					</div>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
 <% @posts.each do |post| %>
 	<%= link_to post_path(post), data: {"turbolinks" => false} ,class: "link_toBoxAtag" do %>
 		<div class="postBox">

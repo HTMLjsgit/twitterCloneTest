@@ -27,6 +27,7 @@ class PostsController < ApplicationController
     @likePosts = @post.likes
     @commentPosts = @post.comments
     @retweet = Retweet.new
+    @comments = Comment.all
   end
 
   def destroy
@@ -39,7 +40,7 @@ class PostsController < ApplicationController
     @posts = @q.result(distinct: true)
     @comments = Comment.all.order(created_at: :desc)
     @users = User.all
-    @RetweetS = Retweet.all.order(created_at: :desc)
+    @retweets = Retweet.all.order(created_at: :desc)
   end
   private
 
