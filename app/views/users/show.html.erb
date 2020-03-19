@@ -18,6 +18,9 @@
 		<% end %>
 	<% end %>
 </div>
+<% @user.relationships.each do |reration| %>
+	FollowId: <%= reration.follow_id %><br>
+<% end %>
 <%= render 'follow_button', user: @user %>
 <% @postsAll.each do |post| %>
 	<% @retweetsAll.each do |retweet| %>

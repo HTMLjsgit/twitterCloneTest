@@ -13,3 +13,15 @@
 .profileEditAndAcount{
 	margin-bottom: 5%;
 }
+.commentSubmit.followNow{
+	background-color: #fff;
+	color: rgba(29,161,242,1.00);;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+	border-bottom-color: rgb(29, 161, 242);
+    border-left-color: rgb(29, 161, 242);
+    border-right-color: rgb(29, 161, 242);
+    border-top-color: rgb(29, 161, 242);
+}
+.commentSubmit.followNow:hover{
+	background-color: rgba(29, 161, 242, 0.1);
+}

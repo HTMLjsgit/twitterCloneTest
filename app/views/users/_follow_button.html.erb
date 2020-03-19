@@ -2,12 +2,18 @@
 	<% if current_user.following?(user) %>
 		<%= form_for(current_user.relationships.find_by(follow_id: user.id), html: {method: :delete}) do |f| %>
 			<%= hidden_field_tag :follow_id, user.id %>
-			<%- f.submit "フォロー削除" %>
+			<%= f.submit "フォロー削除" ,class: "commentSubmit"%>
 		<% end %>
 	<% else %>
 		<%= form_for(current_user.relationships.build) do |f| %>
-			<%- hidden_field_tag :follow_id, user.id %>
-			<%= f.submit "フォロー" %>
+			<%= hidden_field_tag :follow_id, user.id %>
+			<%= f.submit "フォロー" ,class: "commentSubmit followNow"%>
 		<% end %>
 	<% end %>
 <% end %>
+<style>
+	.commentSubmit{
+		margin-left: 10px;
+		margin-bottom: 5%;
+	}
+</style>

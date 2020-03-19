@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     @postsAll = Post.all
     @retweetsAll = Retweet.all
     @usersAll = User.all
+    @relationships = Relationship.all
   end
 
   def edit
