@@ -2,7 +2,9 @@
 	<title><%= @user.name %></title>
 </head>
 <% if @user.backgroundimage? %>
-	<%= image_tag @user.backgroundimage.to_s %>
+	<div class="user_background_image_box">
+		<%= image_tag @user.backgroundimage.to_s, class: "user_backround_image" %>
+	</div>
 <% end %>
 <div class="profileBox">
 	<div class="UserimageAndName">
