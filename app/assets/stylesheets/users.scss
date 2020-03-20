@@ -9,6 +9,7 @@
 }
 .UserimageAndName{
 	display: flex;
+	justify-content: space-between;
 }
 .profileEditAndAcount{
 	margin-bottom: 5%;
@@ -24,4 +25,34 @@
 }
 .commentSubmit.followNow:hover{
 	background-color: rgba(29, 161, 242, 0.1);
+}
+
+.followAtag{
+	text-decoration: none;
+}
+.followAtag:hover{
+	text-decoration: underline;
+	text-decoration-color: black;
+}
+.followCountBox{
+	display: flex;
+}
+.userCountFollowText{
+	font-weight: bold;
+}
+.AtagBoxFollow{
+	width: 100px;
+	color: #000;
+}
+.followText{
+	color: #808080;
+}
+.userCountFollowText{
+	color: #000;
+}
+.profileButtonAndFollowBox{
+	display: flex;
+}
+.commentSubmit.profileButton{
+	margin-top: 70%;
 }

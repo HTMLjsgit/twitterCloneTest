@@ -10,7 +10,13 @@ class UsersController < ApplicationController
     @postsAll = Post.all
     @retweetsAll = Retweet.all
     @usersAll = User.all
-    @relationships = Relationship.all
+    @users = @user.relationships
+  end
+
+  def follow
+    @user = User.find params[:id]
+    @users = @user.relationships
+    @usersAll = User.all
   end
 
   def edit
@@ -25,7 +31,7 @@ class UsersController < ApplicationController
 
   private
   def create_params
-  	params.require(:user).permit(:profile, :name, :image)
+  	params.require(:user).permit(:profile, :name, :image, :backgroundimage)
   end
 
   def is_mine

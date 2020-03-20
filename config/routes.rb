@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users,controllers: { registrations: 'users/registrations' }
+  get 'users/:id/follow' => 'users#follow', as: :user_follow
   resources :users ,only: [:show,:update, :edit]
   get 'mypages/index'
-  # たすけてえええええええええええええええええええええええええ
   get 'posts/index'
   root 'posts#index'
   get 'posts/search'

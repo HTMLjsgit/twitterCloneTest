@@ -1,0 +1,7 @@
+<% @usersAll.each do |user| %>
+	<% @users.each do |reration| %>
+		<% if user.id == reration.follow_id %>
+			<h3><%= user.name %></h3>
+		<% end %>
+	<% end %>
+<% end %>

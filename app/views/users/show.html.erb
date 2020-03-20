@@ -1,4 +1,9 @@
-<title><%= @user.name %></title>
+<head>
+	<title><%= @user.name %></title>
+</head>
+<% if @user.backgroundimage? %>
+	<%= image_tag @user.backgroundimage.to_s %>
+<% end %>
 <div class="profileBox">
 	<div class="UserimageAndName">
 		<% if @user.image? %>
@@ -6,20 +11,32 @@
 		<% else %>
 			<%= image_tag "人物アイコン.png"  ,class: "userIconShow"%><br>
 		<% end %>
+		<div class="profileEditAndAcount">
+			<% if user_signed_in? %>
+				<% if @user.id == current_user.id %>
+					<%= button_to "プロフィール編集",edit_user_path, data: {"turbolinks" => false} , class: "commentSubmit profileButton" ,method: :get %>
+					<%#= link_to "アカウント編集", edit_user_registration_path %>
+				<% end %>
+			<% end %>
+		</div>
 	</div>
 		<h3><%= @user.name %></h3>
 		<p><%= @user.profile %></p><br>
 </div>
-<div class="profileEditAndAcount">
-	<% if user_signed_in? %>
-		<% if @user.id == current_user.id %>
-			<%= button_to "プロフィール編集",edit_user_path, data: {"turbolinks" => false} , class: "commentSubmit profileButton" ,method: :get %>
-			<%= link_to "アカウント編集", edit_user_registration_path %>
+
+<% @usersAll.each do |user| %>
+	<% @users.each do |reration| %>
+		<% if user.id == reration.follow_id %>
+			<div class="AtagBoxFollow">
+				<%= link_to user_follow_path(user) ,data: {"turbolinks" => false} ,class: "followAtag" do %>
+					<div class="followCountBox">
+						<p class="userCountFollowText"><%= @users.count.to_s %></p>
+						<p class="followText">フォロー</p>
+					</div>
+				<% end %>
+			</div>
 		<% end %>
 	<% end %>
-</div>
-<% @user.relationships.each do |reration| %>
-	FollowId: <%= reration.follow_id %><br>
 <% end %>
 <%= render 'follow_button', user: @user %>
 <% @postsAll.each do |post| %>

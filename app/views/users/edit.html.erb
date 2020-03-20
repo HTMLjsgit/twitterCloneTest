@@ -1,6 +1,9 @@
 <%= form_with model: @user, local: true do |f| %>
 	<%= f.text_field :name %><br>
 	<%= f.text_area :profile %><br>
-	<%= f.file_field :image %><br>
+	<%= f.label "ユーザー画像" %>
+	<%= f.file_field :image %><br><br>
+	<%= f.label "背景画像" %>
+	<%= f.file_field :backgroundimage %><br><br>
 	<%= f.submit %>
 <% end %>
