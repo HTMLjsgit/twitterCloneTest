@@ -29,7 +29,7 @@
 					<% end %>
 					<br>
 				</div>
-						<div class="postAtagBox">
+						<div class="postAtagBox commentAtagBox">
 							<%= @comments.find(@comment.reply_comment).content %><br>
 							<div class="postideoAndImage">
 								<% if @comments.find(@comment.reply_comment).video? %>
@@ -43,7 +43,7 @@
 					</div>
 			</div>
 	</div>
-			<div class="border"></div>
+		<div class="border"></div>
 	<% end %>
 <% @posts.each do |post| %>
 	<% if post.id == @comment.post_id %>
@@ -73,13 +73,11 @@
 												<%= image_tag "人物アイコン.png", class: "user_image" %>
 											<% end %>
 										</object>
-										<object>
-											<h4 class="user_nameText">
-												<object>
-													<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
-												</object>
-											</h4>
-										</object>
+										<h4 class="user_nameText">
+											<object>
+												<%= link_to user.name,user_path(post.user_id) ,class: "link_toUser_name"%>
+											</object>
+										</h4>
 									<% end %>
 								<% end %>
 							<% end %>
@@ -159,7 +157,7 @@
 	</div>
 	<%#= render 'tag_list' , tag_list: @post.tag_list%>
 	<%#= @comment.commentlikes_users.count.to_s %>
-<% if user_signed_in? %>
+	<% if user_signed_in? %>
 		<div class="indexActionMenuBox">
 			<% if current_user.already_likedComment?(@comment) %>
 				<%= link_to comment_commentlike_path(@comment), method: :delete , data: {"turbolinks" => false},class: "likeLink" do %>
@@ -178,33 +176,39 @@
 					<% end %>
 				</div>
 			</div>
-			<p class="actionbuttonCount"><%= %></p>
-			<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
-			<%= %>
-	</div>
-	</div>
-	<div class="modal js-modal">
-		<div class="modal__bg js-modal-close"></div>
-		<div class="modal__content">
-			<%= link_to "",class: "js-modal-close batsu" ,  data: {"turbolinks" => false} do %>
-				<%= image_tag "batu (1).png", width: "30", height: "30" %>
-			<% end %>
-			<%= simple_format @comment.content.truncate(20),class: "post_body" %>
-			<div class="commentformBox">
-				<%= form_with model: @new_comments, local: true do |f|%>
-					<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
-					<%= f.label "画像" %>
-					<%= f.file_field :image %><br>
-					<%= f.label "動画" %>
-					<%= f.file_field :video %><br>
-					<%= f.text_field :tag_list %><br>
-					<%= f.hidden_field :reply_comment, :value => @comment.id %>
-					<%= f.submit "応答",class: "commentSubmit"%>
+			<% if current_user.already_likedRetweetComment?(@comment) %>
+				<%= link_to comment_commentretweet_path(@comment), method: :delete do %>
+					<%= image_tag "retweet (2).png",width: "30", height: "30", class: "actionbutton" %>
 				<% end %>
+			<% else %>
+				<%= link_to comment_commentretweets_path(@comment), method: :post do %>
+					<%= image_tag "retweet (1).png",width: "30", height: "30", class: "actionbutton" %>
+				<% end %>
+			<% end %>
+		</div>
+</div>
+		<div class="modal js-modal">
+			<div class="modal__bg js-modal-close"></div>
+			<div class="modal__content">
+				<%= link_to "",class: "js-modal-close batsu" ,  data: {"turbolinks" => false} do %>
+					<%= image_tag "batu (1).png", width: "30", height: "30" %>
+				<% end %>
+				<%= simple_format @comment.content.truncate(20),class: "post_body" %>
+				<div class="commentformBox">
+					<%= form_with model: @new_comments, local: true do |f|%>
+						<%= f.text_area :content ,placeholder: "返信をツイートする",class: "content_body"%><br>
+						<%= f.label "画像" %>
+						<%= f.file_field :image %><br>
+						<%= f.label "動画" %>
+						<%= f.file_field :video %><br>
+						<%= f.text_field :tag_list %><br>
+						<%= f.hidden_field :reply_comment, :value => @comment.id %>
+						<%= f.submit "応答",class: "commentSubmit"%>
+					<% end %>
+				</div>
 			</div>
 		</div>
-	</div>
-<% end %>
+	<% end %>
 <script>
 	$(function(){
 		$('.js-modal-open').on('click', function(){
@@ -229,7 +233,8 @@
 	.ShowPostBox{
 	margin-top: 10%;
 }
+.messageCommentBox
+.postBox:hover{
+	background-color: #fff;
+}
 </style>
-<%# @comment.liked_users.each do |user| %>
-	<%#= user.name %><br>
-<%# end %>

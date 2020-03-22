@@ -7,6 +7,7 @@ class User < ApplicationRecord
   mount_uploader :backgroundimage, BackgroundimageUploader
   has_many :posts, dependent: :destroy
   validates :name, presence: true
+  validates :profile,length: { maximum: 200}
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
@@ -18,6 +19,7 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :follow
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id', dependent: :destroy
   has_many :followers, through: :reverse_of_relationships, source: :user
+  has_many :commentretweets, dependent: :destroy
   def update_without_current_password(params, *options)
 	  params.delete(:current_password)
 
@@ -41,6 +43,10 @@ class User < ApplicationRecord
 
   def already_likedRetweet?(post)
       self.retweets.exists?(post_id: post.id)
+  end
+
+  def already_likedRetweetComment?(comment)
+      self.commentretweets.exists?(comment_id: comment.id)
   end
 
   def follow(other_user)

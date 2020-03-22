@@ -57,9 +57,26 @@
 	margin-top: 70%;
 }
 .user_backround_image{
+	height: 100%;
 	width: 100%;
-	height: 25%;
+	background-position: center;
 }
 .user_background_image_box{
 	border: 1px solid #ddd;
+	width: 100%;
+	height: 300px;
+	background-color: rgb(204, 214, 221);
+}
+.profileindexBox{
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+.profileAndBoxAndNameAndUser{
+}
+.followBox{
+	border: 1px solid #ddd;
+}
+.followBox:hover{
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	background-color: rgb(245,248,250);
 }

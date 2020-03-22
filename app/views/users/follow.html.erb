@@ -1,7 +1,59 @@
 <% @usersAll.each do |user| %>
 	<% @users.each do |reration| %>
 		<% if user.id == reration.follow_id %>
-			<h3><%= user.name %></h3>
+			<%= link_to user_path(user),class: "link_toBoxAtag" do %>
+				<div class="followBox">
+						<div class="postBox">
+							<div class="userimageAndNameBox">
+								<% if user.image? %>
+									<% if user.id == reration.follow_id %>
+										<div class="imageBox">
+											<object>
+												<%= link_to user_path(user) do %>
+													<%= image_tag user.image.to_s, class: "user_image" %>
+												<% end %>
+											</object>
+										</div>
+										<object>
+											<h4 class="user_nameText">
+												<object>
+													<%= link_to user.name, user_path(user), class: "link_toUser_name" %>
+												</object>
+											</h4>
+										</object>
+									<% end %>
+								<% else %>
+									<% if user.id == reration.follow_id %>
+										<div class="imageBox">
+											<object>
+												<%= link_to user_path(user) do %>
+												<%= image_tag "人物アイコン.png",class: "user_image" %>
+												<% end %>
+											</object>
+										</div>
+										<h4 class="user_nameText">
+											<object>
+												<%= link_to user.name, user_path(user), class: "link_toUser_name" %>
+											</object>
+										</h4>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
+					<div class="profileindexBox">
+						<div class="postAtagBox">
+							<object>
+								<p><%= user.profile %></p>
+							</object>
+						</div>
+					</div>
+				</div>
+			<% end %>
 		<% end %>
 	<% end %>
 <% end %>
+<style>
+	.postBox{
+		border-style: none;
+	}
+</style>

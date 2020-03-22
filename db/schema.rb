@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_20_180528) do
+ActiveRecord::Schema.define(version: 2020_03_21_200744) do
 
   create_table "commentlikes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "post_id"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 2020_03_20_180528) do
     t.index ["comment_id"], name: "index_commentlikes_on_comment_id"
     t.index ["post_id"], name: "index_commentlikes_on_post_id"
     t.index ["user_id"], name: "index_commentlikes_on_user_id"
+  end
+
+  create_table "commentretweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_commentretweets_on_comment_id"
+    t.index ["user_id"], name: "index_commentretweets_on_user_id"
   end
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -120,6 +129,8 @@ ActiveRecord::Schema.define(version: 2020_03_20_180528) do
   add_foreign_key "commentlikes", "comments"
   add_foreign_key "commentlikes", "posts"
   add_foreign_key "commentlikes", "users"
+  add_foreign_key "commentretweets", "comments"
+  add_foreign_key "commentretweets", "users"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "relationships", "users"

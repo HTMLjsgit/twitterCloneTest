@@ -11,6 +11,8 @@ class UsersController < ApplicationController
     @retweetsAll = Retweet.all
     @usersAll = User.all
     @users = @user.relationships
+    @commentretweetAll = Commentretweet.all
+    @commentretweets = @user.commentretweets
   end
 
   def follow

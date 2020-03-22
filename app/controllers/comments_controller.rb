@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
 		@comments = Comment.all
 		@users = User.all
 		@posts = Post.all
+		@retweet = Commentretweet.new
 	end
 
 	private

@@ -7,6 +7,7 @@ class PostsController < ApplicationController
     @users = User.all
     @comments = Comment.all.order(created_at: :desc)
     @retweets = Retweet.all
+    @commentretweets = Commentretweet.all
   end
 
   def new
