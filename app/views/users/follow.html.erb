@@ -1,55 +1,47 @@
-<% @usersAll.each do |user| %>
-	<% @users.each do |reration| %>
-		<% if user.id == reration.follow_id %>
-			<%= link_to user_path(user),class: "link_toBoxAtag" do %>
-				<div class="followBox">
-						<div class="postBox">
-							<div class="userimageAndNameBox">
-								<% if user.image? %>
-									<% if user.id == reration.follow_id %>
-										<div class="imageBox">
-											<object>
-												<%= link_to user_path(user) do %>
-													<%= image_tag user.image.to_s, class: "user_image" %>
-												<% end %>
-											</object>
-										</div>
+<% @followings.each do |reration| %>
+	<%= link_to user_path(reration),class: "link_toBoxAtag" do %>
+		<div class="followBox">
+				<div class="postBox">
+					<div class="userimageAndNameBox">
+						<% if reration.image? %>
+								<div class="imageBox">
+									<object>
+										<%= link_to user_path(reration) do %>
+											<%= image_tag reration.image.to_s, class: "user_image" %>
+										<% end %>
+									</object>
+								</div>
+								<object>
+									<h4 class="user_nameText">
 										<object>
-											<h4 class="user_nameText">
-												<object>
-													<%= link_to user.name, user_path(user), class: "link_toUser_name" %>
-												</object>
-											</h4>
+											<%= link_to reration.name, user_path(reration), class: "link_toUser_name" %>
 										</object>
-									<% end %>
-								<% else %>
-									<% if user.id == reration.follow_id %>
-										<div class="imageBox">
-											<object>
-												<%= link_to user_path(user) do %>
-												<%= image_tag "人物アイコン.png",class: "user_image" %>
-												<% end %>
-											</object>
-										</div>
-										<h4 class="user_nameText">
-											<object>
-												<%= link_to user.name, user_path(user), class: "link_toUser_name" %>
-											</object>
-										</h4>
-									<% end %>
-								<% end %>
+									</h4>
+								</object>
+						<% else %>
+							<div class="imageBox">
+								<object>
+									<%= link_to user_path(reration) do %>
+									<%= image_tag "人物アイコン.png",class: "user_image" %>
+										<% end %>
+								</object>
 							</div>
-						</div>
-					<div class="profileindexBox">
-						<div class="postAtagBox">
-							<object>
-								<p><%= user.profile %></p>
-							</object>
-						</div>
+							<h4 class="user_nameText">
+								<object>
+									<%= link_to reration.name, user_path(reration), class: "link_toUser_name" %>
+								</object>
+							</h4>
+						<% end %>
 					</div>
 				</div>
-			<% end %>
-		<% end %>
+			<div class="profileindexBox">
+				<div class="postAtagBox">
+					<object>
+						<p><%= reration.profile %></p>
+					</object>
+				</div>
+			</div>
+		</div>
 	<% end %>
 <% end %>
 <style>

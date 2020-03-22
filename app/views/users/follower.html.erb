@@ -1,0 +1,44 @@
+<% @followers.each do |following| %>
+	<%= link_to user_path(following),class: "link_toBoxAtag" do %>
+		<div class="followBox">
+			<div class="userimageAndNameBox">
+				<% if following.image? %>
+						<div class="imageBox">
+							<object>
+								<%= link_to user_path(following) do %>
+									<%= image_tag following.image.to_s, class: "user_image" %>
+								<% end %>
+							</object>
+						</div>
+						<object>
+							<h4 class="user_nameText">
+								<object>
+									<%= link_to following.name, user_path(following), class: "link_toUser_name" %>
+								</object>
+							</h4>
+						</object>
+				<% else %>
+					<div class="imageBox">
+						<object>
+							<%= link_to user_path(following) do %>
+								<%= image_tag "人物アイコン.png",class: "user_image" %>
+							<% end %>
+						</object>
+					</div>
+					<h4 class="user_nameText">
+						<object>
+							<%= link_to following.name, user_path(following), class: "link_toUser_name" %>
+						</object>
+					</h4>
+				<% end %>
+			</div>
+			<div class="profileindexBox">
+				<div class="postAtagBox">
+					<object>
+						<p><%= following.profile %></p>
+					</object>
+				</div>
+			</div>
+		</div>
+	<% end %>
+<% end %>

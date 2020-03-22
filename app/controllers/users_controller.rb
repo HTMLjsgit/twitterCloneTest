@@ -10,15 +10,22 @@ class UsersController < ApplicationController
     @postsAll = Post.all
     @retweetsAll = Retweet.all
     @usersAll = User.all
-    @users = @user.relationships
+    @followings = @user.followings
     @commentretweetAll = Commentretweet.all
     @commentretweets = @user.commentretweets
+    @followers = @user.followers
   end
 
   def follow
     @user = User.find params[:id]
-    @users = @user.relationships
-    @usersAll = User.all
+    @followers = @user.followers
+    @followings = @user.followings
+  end
+
+  def follower
+    @user = User.find params[:id]
+    @followers = @user.followers
+
   end
 
   def edit

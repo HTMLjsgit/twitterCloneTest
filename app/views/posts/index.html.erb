@@ -7,7 +7,7 @@
 						<% if retweet.user_id == user.id %>
 							<p class="retweetPtag">
 							<object>
-								<%= link_to user.name, user_path(post.user_id) ,class: "retweetAtag"%>
+								<%= link_to user.name, user_path(retweet.user_id) ,class: "retweetAtag"%>
 							</object>
 							がリツイート</p>
 						<% end %>
@@ -25,7 +25,7 @@
 									</div>
 									<object>
 										<h4 class="user_nameText">
-											<%= link_to user.name, user_path(retweet.user_id), class: "link_toUser_name" %>
+											<%= link_to user.name, user_path(post.user_id), class: "link_toUser_name" %>
 										</h4>
 									</object>
 								<% end %>
@@ -40,7 +40,7 @@
 									</div>
 									<object>
 										<h4 class="user_nameText">
-											<%= link_to user.name, user_path(retweet.user_id), class: "link_toUser_name" %>
+											<%= link_to user.name, user_path(post.user_id), class: "link_toUser_name" %>
 										</h4>
 									</object>
 								<% end %>
@@ -148,7 +148,7 @@
 							</div>
 						<% end %>
 					</div>
-			<% end %>
+				<% end %>
 			<% end %>
 	<% end %>
 <% end %>

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users,controllers: { registrations: 'users/registrations' }
-  get 'users/:id/follow' => 'users#follow', as: :user_follow
+  get 'users/:id/followings' => 'users#follow', as: :user_follow
+  get 'users/:id/followers' => 'users#follower', as: :user_follower
   resources :users ,only: [:show,:update, :edit]
   get 'mypages/index'
   get 'posts/index'

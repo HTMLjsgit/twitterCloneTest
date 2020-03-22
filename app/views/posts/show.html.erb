@@ -90,23 +90,17 @@
 			<% if user_signed_in? %>
 				<% if current_user.already_likedRetweet?(@post) %>
 					<%= link_to post_retweet_path(@post), method: :delete , data: {"turbolinks" => false} do %>
-						<%= image_tag "retweet (1).png", width: "30",height: "30" %>
-						リツイート削除
+						<%= image_tag "retweet (2).png", width: "30",height: "30" %>
 					<% end %>
 				<% else %>
-					<%= link_to post_retweets_path(@post), method: :post , data: {"turbolinks" => false} do %>
-						<%= image_tag "retweet (1).png", width: "30", height: "30" %>
-					<% end %>
-				<% end %>
-			<% else %>
-				<%= link_to new_user_registration_path, data: {"turbolinks" => false} do %>
-					<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+						<%= link_to post_retweets_path(@post), method: :post , data: {"turbolinks" => false} do %>
+							<%= image_tag "retweet (1).png", width: "30", height: "30" %>
+						<% end %>
 				<% end %>
 			<% end %>
 		</div>
 	</div>
-	</div>
-
+</div>
 	<!-- <div class="CommentformBox">
 
 	</div> -->
